@@ -16,7 +16,7 @@ public class TicTacToe {
         System.out.println();
     }
 
-    private static boolean isNumber(String input){
+    public boolean isNumber(String input){
         for(int i = 0; i < input.length(); i++){
             if(!Character.isDigit(input.charAt(i))){
                 return false;
@@ -25,7 +25,7 @@ public class TicTacToe {
         return true;
     }
 
-    private static boolean isValidMove(String input){
+    public boolean isValidMove(String input){
         if(input.length() != 1){
             return false;
         }
@@ -43,14 +43,14 @@ public class TicTacToe {
         return board[row][col] == ' ';
     }
 
-    private static void makeMove(String input){
+    public void makeMove(String input){
         int move = Integer.parseInt(input);
         int row = (move - 1) / 3;
         int col = (move - 1) % 3;
         board[row][col] = currentPlayer;
     }
 
-    private static void switchPlayer(){
+    public void switchPlayer(){
         if(currentPlayer == 'X'){
             currentPlayer = 'O';
         }
@@ -59,7 +59,7 @@ public class TicTacToe {
         }
     }
 
-    private static boolean checkWin(){
+    public boolean checkWin(){
         for(int i = 0; i < 3; i++) {
             if (board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][0] != ' ') {
                 return true;
@@ -77,13 +77,13 @@ public class TicTacToe {
             return false;
     }
 
-    private static boolean checkDraw(){
+    public boolean checkDraw(){
         return board[0][0] != ' ' && board[0][1] != ' ' && board[0][2] != ' ' &&
                 board[1][0] != ' ' && board[1][1] != ' ' && board[1][2] != ' ' &&
                 board[2][0] != ' ' && board[2][1] != ' ' && board[2][2] != ' ';
     }
 
-    public static void main(String[] args){
+    public void runGame(){
         Scanner scanner = new Scanner(System.in);
         boolean gameEnd = false;
         while (!gameEnd){
@@ -111,5 +111,9 @@ public class TicTacToe {
             System.out.println("Draw!");
         }
         scanner.close();
+    }
+    public static void main(String[] args){
+        TicTacToe game = new TicTacToe();
+        game.runGame();
     }
 }
