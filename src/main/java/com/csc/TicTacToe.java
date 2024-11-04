@@ -1,9 +1,11 @@
 package com.csc;
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
     private static final char[][] board = { {' ', ' ',' '}, {' ', ' ',' '}, {' ', ' ',' '} };
     private static char currentPlayer = 'X';
+    private static boolean isComputerPlayer = false;
 
     private static void printBoard(){
         System.out.println();
@@ -50,6 +52,17 @@ public class TicTacToe {
         board[row][col] = currentPlayer;
     }
 
+    public void makeRandomMove(){
+        Random random = new Random();
+        int move;
+        do{
+           move = random.nextInt(9) + 1;
+        }
+        while (!isValidMove(String.valueOf(move)));
+        makeMove(String.valueOf(move));
+        System.out.println("The computer player moved in space " + move + ".");
+    }
+
     public void switchPlayer(){
         if(currentPlayer == 'X'){
             currentPlayer = 'O';
@@ -81,6 +94,62 @@ public class TicTacToe {
         return board[0][0] != ' ' && board[0][1] != ' ' && board[0][2] != ' ' &&
                 board[1][0] != ' ' && board[1][1] != ' ' && board[1][2] != ' ' &&
                 board[2][0] != ' ' && board[2][1] != ' ' && board[2][2] != ' ';
+    }
+
+    public void mainMenu(){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.print("Welcome to Tic Tac Toe!");
+            System.out.print("Please choose a game mode:");
+            System.out.print("(1) Human vs. human");
+            System.out.println("(2) Human vs. computer");
+
+            String choice = scanner.nextLine();
+            if(choice.equals("1")){
+                isComputerPlayer = false;
+                break;
+            }
+            else if(choice.equals("2")){
+                isComputerPlayer = true;
+                break;
+            }
+            else{
+                System.out.print("That is an invalid choice. Try again.");
+            }
+        }
+    }
+
+    public void exitMenu(){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.print("Would you like to play again?");
+            System.out.print("(1) Yes");
+            System.out.print("(2) No");
+
+            String choice = scanner.nextLine();
+            if(choice.equals("1")){
+                resetBoard();
+                runGame();
+                break;
+            }
+            else if(choice.equals("2")){
+                System.out.println("Goodbye!");
+                scanner.close();
+                System.exit(0);
+            }
+            else{
+                System.out.print("That is an invalid choice. Try again.");
+            }
+        }
+    }
+
+    public void resetBoard(){
+        for(int i = 0; i < 3; i++){
+            for (int j = 0; j < 3; j++){
+                board[i][j] = ' ';
+            }
+        }
+        currentPlayer = 'X';
     }
 
     public void runGame(){
