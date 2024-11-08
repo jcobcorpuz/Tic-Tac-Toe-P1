@@ -99,10 +99,10 @@ public class TicTacToe {
     public void mainMenu(){
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.print("Welcome to Tic Tac Toe!");
-            System.out.print("Please choose a game mode:");
-            System.out.print("(1) Human vs. human");
-            System.out.println("(2) Human vs. computer");
+            System.out.print("Welcome to Tic Tac Toe!\n");
+            System.out.print("Please choose a game mode:\n");
+            System.out.print("(1) Human vs. human\n");
+            System.out.println("(2) Human vs. computer\n");
 
             String choice = scanner.nextLine();
             if(choice.equals("1")){
@@ -122,9 +122,9 @@ public class TicTacToe {
     public void exitMenu(){
         Scanner scanner = new Scanner(System.in);
         while(true){
-            System.out.print("Would you like to play again?");
-            System.out.print("(1) Yes");
-            System.out.print("(2) No");
+            System.out.print("Would you like to play again?\n");
+            System.out.print("(1) Yes\n");
+            System.out.print("(2) No\n");
 
             String choice = scanner.nextLine();
             if(choice.equals("1")){
@@ -153,19 +153,26 @@ public class TicTacToe {
     }
 
     public void runGame(){
+        mainMenu();
+
         Scanner scanner = new Scanner(System.in);
         boolean gameEnd = false;
         while (!gameEnd){
             printBoard();
-            System.out.println("Player " + currentPlayer + ", enter your move (1-9)");
-            String input = scanner.nextLine();
+            if (isComputerPlayer && currentPlayer == 'O'){
+                makeRandomMove();
+            }
+            else{
+                System.out.println("Player " + currentPlayer + ", enter your move (1-9)");
+                String input = scanner.nextLine();
 
-            if(!isValidMove(input)){
-                System.out.println("Invalid move, please re-enter your move (1-9)");
-                continue;
+                if(!isValidMove(input)){
+                    System.out.println("Invalid move, please re-enter your move (1-9)");
+                    continue;
+                }
+                makeMove(input);
             }
 
-            makeMove(input);
             gameEnd = checkWin() || checkDraw();
             if (!gameEnd) {
                 switchPlayer();
@@ -179,7 +186,7 @@ public class TicTacToe {
         else{
             System.out.println("Draw!");
         }
-        scanner.close();
+        exitMenu();
     }
     public static void main(String[] args){
         TicTacToe game = new TicTacToe();
