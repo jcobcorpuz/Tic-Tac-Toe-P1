@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 public class TicTacToe {
     private static final char[][] board = { {' ', ' ',' '}, {' ', ' ',' '}, {' ', ' ',' '} };
-    private static char currentPlayer = 'X';
+    private static char currentPlayer;
     private static boolean isComputerPlayer = false;
+    private static char playerOneMark;
+    private static char playerTwoMark;
 
     private static void printBoard(){
         System.out.println();
@@ -64,11 +66,11 @@ public class TicTacToe {
     }
 
     public void switchPlayer(){
-        if(currentPlayer == 'X'){
-            currentPlayer = 'O';
+        if(currentPlayer == playerOneMark){
+            currentPlayer = playerTwoMark;
         }
         else{
-            currentPlayer = 'X';
+            currentPlayer = playerOneMark;
         }
     }
 
@@ -152,8 +154,36 @@ public class TicTacToe {
         currentPlayer = 'X';
     }
 
+    public void getPlayerMarks(){
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("Player 1, choose your mark: ");
+            String input = scanner.nextLine();
+            if (input.length() == 1 && !Character.isWhitespace(input.charAt(0))){
+                playerOneMark = input.charAt(0);
+                break;
+            }
+            else{
+                System.out.println("Invalid mark, please try again.");
+            }
+        }
+        while(true){
+            System.out.println("Player 2, choose your mark: ");
+            String input = scanner.nextLine();
+            if (input.length() == 1 && !Character.isWhitespace(input.charAt(0)) && input.charAt(0) != playerOneMark){
+                playerTwoMark = input.charAt(0);
+                break;
+            }
+            else{
+                System.out.println("Invalid mark, please try again.");
+            }
+        }
+        currentPlayer = playerOneMark;
+    }
+
     public void runGame(){
         mainMenu();
+        getPlayerMarks();
 
         Scanner scanner = new Scanner(System.in);
         boolean gameEnd = false;
